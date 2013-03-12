@@ -1,0 +1,25 @@
+   (t
+      (format t "assoc: ~a~%" (assoc (line-endsound ln) map))
+      (format t "first pat: ~a~%" (first pat))
+      (cond
+         ((equal (assoc (line-endsound ln) map) nil)
+          (format t "assoc for check exists but no mapping for sound: ~a~%" (line-endsound ln))
+          (setf mapping (map-to-next (line-endsound ln) check map))
+          (format t "new mapping for sound: ~a~%" mapping)
+          (setf map (cons mapping map))
+          (format t "map is now: ~a~%" map)
+          (match-to-pattern i pat map retval)
+         )
+         ((and (equal (line-numsylls ln) (second (first pat)))
+            (equal (cdr (assoc (line-endsound ln) map)) check)
+          )
+          (format t "hello there")
+          (setf retval (cons (line-contents ln) retval))
+          (match-to-pattern (- i 1) (cdr pat) map retval)
+        )
+        (t
+          (match-to-pattern i pat map retval)
+        )
+      )
+    )
+

@@ -1,0 +1,38 @@
+The following is a development strategy for the project, outlining several phases to be accomplished over the
+course of the semester. Additions will be made as the project progresses.
+
+1. High Level Modeling of Poetic Forms
+
+It seems that the best way to approach this problem is to start general and work my way to the specifics, so a first goal would be to have a simple poem model and generation function. The initial poem model will have a structure (“form”) based on the number and types of stanzas that compose it. I will implement a few select forms in the first iteration: Cento, Limerick, Haiku, Chance Operations, Sonnet. Stanzas are made up of lines and have rhyme schemes. The initial generation function will take   a form type as input and populate the described features of a poem object with strings that represent lines taken from a static source (text file, or hard coded).
+
+Status: COMPLETE
+
+2. Expand on the Concept of a Line
+
+Deconstruct the line model, which can be said to be composed of sentences and/or phrases. Phrases are noun phrases and verb phrases. These are composed of morphemes, which are minimally root words and can optionally have affixes, stress/intonation, and a part of speech type. Morphemes are further decomposed into phonemes, which will eventually be used to identify and reconstruct certain poetic techniques. Also minimally update the generation function to account for these changes. 
+
+3. Create the “Linguistic Dictionary”
+
+At its core, this is a SQL database that I will be using Uncommon SQL (a common lisp db library) to interact with. This step is more or less setting up the database and writing a line parsing function which will break a line into words and add them to the database. Words in the database will have various attributes associated with them that will be of use in constructing poetic techniques, such as rhyming, alliteration, assonance, etc... For example, a word may have database columns for starting phoneme (group), last phoneme(group), major vowel, and stress. 
+
+
+4. Add Poetic Techniques Helper Functions
+
+This step is the first phase in the reconstruction process. This set of functions will allow the user to take words from the database and create phrases and groups of phrases which are “poetic” to some extent. The techniques mentioned in the previous step would be implemented first, and if I have extra time, will try to create functions for more.
+
+5. Training Data (Poems) and Construction of PCFG
+
+This is where things get a bit fuzzy, but the general idea is that this step involves functions that will use the line parsing function from step 3 on a large set of training data and construct a probabilistic context free grammar that has production rules for not only word combinations, but also combinations of poetic phrases that can be constructed using the functionality from step 4. This is a major stepping stone for the project, as it integrates much of the code from the previous few steps into something quite useful.
+ 
+
+6. High Level Heuristic Generation from PCFG Data
+
+Although with the PCFG, we would be able to use the program to construct valid texts, we can hardly say the program has any sort of “intelligence”, so the next step of the process is to write a basic heuristic generation module so we have a program that will be able to write its own rules for poetic texts. The algorithm will create heuristics for poem construction, essentially programmatically reversing the process of the previous steps using random combinations of words and phrases from the linguistic dictionary.
+
+Disclaimer: these may turn out to be really bad and aesthetically displeasing rules.
+
+7. Low Level Heuristic Generation
+
+A refinement of the previous step. Instead of taking words and phrases randomly from the “dictionary”,  it will utilize the PCFG rules in some certain cases to (hopefully) construct passages that would actually be meaningful to a human on a deeper level. 
+
+Note: This will be elaborated on and specified more as the project progresses.
