@@ -1,4 +1,9 @@
+;; methods for generating poems of certain given forms,
+;; using classes defined in poem.l
+
 (load "poem.l")
+
+;; generate a poem given a symbol denoting its form
 
 (defmethod generate-poem ((f symbol))
   (cond
@@ -17,17 +22,23 @@
   )
 )
 
+;; generate a chanceops poem
+
 (defmethod generate-chanceops (&aux p)
   (setf p (make-instance 'stanza :numlines 5 :contents (make-contents 5 nil nil)))
   (format t "A Chance Operations Poem~%~%")
   (display p) 
 ) 
 
+;; generate a haiku poem
+
 (defmethod generate-haiku ()
   (setf p (make-instance 'stanza :numlines 3 :contents (make-contents 3 nil '(7 5 7))))
   (format t "A Haiku Poem~%~%")
   (display p) 
 )
+
+;; generate a limerick poem
 
 (defmethod generate-limerick ()
   (setf p (make-instance 'stanza :numlines 5 :contents (make-contents 5 '(a a b b a) '(7 7 5 5 7))))
@@ -67,6 +78,8 @@
 ;; Random Rhyme Scheme Generation Code
 ;------------------------------------------------------------------------------
 
+;; generate a random rhyme scheme, given a number of lines
+
 (defmethod gen-rhyme-scheme ((i integer) &aux rs curr)
   (setf curr '(a))
   (setf rs nil)
@@ -76,6 +89,9 @@
   )
   rs
 )
+
+;; returns a list of acceptable letters to choose from to
+;; add to the rhyme scheme
 
 (defmethod acceptable-rs-lets ((curr list)(rs list)(count integer))
   (cond
@@ -152,6 +168,9 @@
 ;------------------------------------------------------------------------------
 
 ;; Random line generation (reading from file and object creation)
+;------------------------------------------------------------------------------
+
+;; generate an instance of line from a line read from a file
 
 (defmethod generate-random-line (&aux ln syl rhy str)
   (with-input-from-string (stream (read-random-line))
@@ -162,7 +181,9 @@
   (setf ret (make-instance 'line :contents str :endsound rhy :numsylls syl))
   ret
 )
- 
+
+;; read a random line from a file
+
 (defmethod read-random-line (&aux rline rand num)
   (setf rand (random 24))
   (setf num 0)
@@ -183,17 +204,3 @@
 
 ;; End line generation code
 ;------------------------------------------------------------------------------
-
-;; Utility methods
-
-(defmethod snoc ((s symbol)(l list))
-  (cond
-    ((null l)
-      (list s)
-    )
-    (t
-      (cons (car l) (snoc s (cdr l)))
-    )
-  )
-)
-

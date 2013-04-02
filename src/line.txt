@@ -1,0 +1,127 @@
+;; LINE GENERATION CODE
+
+(load "util.l")
+
+;; a declarative sentence class
+;; subj and obj are nphrase objects
+;; verb is a vphrase object
+
+(defclass decsentence ()
+  (
+    (subj :accessor decsentence-subj :initarg :subj)
+    (verb :accessor decsentence-verb :initarg :verb)
+    (obj :accessor decsentence-obj :initarg :obj)
+  )
+)
+
+(defclass nphrase ()
+  (
+    (contents :accessor nphrase-contents :initarg :contents :initform nil)
+  )
+)
+
+(defclass vphrase ()
+  (
+    (contents :accessor vphrase-contents :initarg :contents :initform nil)
+  )
+)
+
+; generate a declarative sentence
+(defmethod gen-dec-sentence (&aux s v o)
+  (setf s (make-instance 'nphrase :contents (gen-phrase-contents (gen-np-struc nil))))
+  (setf v (make-instance 'vphrase :contents (gen-phrase-contents (gen-vp-struc nil))))
+  (setf o (make-instance 'nphrase :contents (gen-phrase-contents (gen-np-struc nil))))
+  (make-instance 'decsentence :subj s :verb v :obj o)
+)
+
+; display nicely a declarative sentence
+(defmethod display ((s decsentence) &aux l1 l2 l3 lst)
+  (setf l1 (nphrase-contents (decsentence-subj s)))
+  (setf l2 (vphrase-contents (decsentence-verb s)))
+  (setf l3 (nphrase-contents (decsentence-obj s)))
+  (setf lst (append l1 l2 l3))
+  (format nil "~{~a~^~%~}" lst)
+)
+
+; generate a structural list to create a noun phrase
+; should give it nil and it will build a list from their
+(defmethod gen-np-struc ((lst list) &aux ret detmod numadj)
+  (setf detmod (prob-of-modifier 5))
+  (if (equal detmod t)
+    (setf ret (cons '1 ret))
+  )
+  (setf numadj (random 3))
+  (dotimes (x numadj t)
+    (setf ret (reverse (cons '6 (reverse ret))))
+  )
+  (setf ret (reverse (cons '2 (reverse ret))))
+  ret
+)
+
+; generate a structural list to create a verb phrase
+(defmethod gen-vp-struc ((lst list) &aux ret finmod)
+  (setf finmod (prob-of-modifier 5))
+  (if (equal finmod t)
+    (setf ret (cons '5 ret))
+  )
+  (setf ret (reverse (cons '8 (reverse ret))))
+  ret
+)
+
+; the longer the list, the higher chance we will ret nil
+(defmethod prob-of-modifier ((l integer) &aux num)
+  (setf num (random 10))
+  (cond
+    ((< num l)
+      nil
+    )
+    (t
+      t
+    )
+  )
+) 
+
+; take the list struc and generate a noun phrase list based on it
+(defmethod gen-phrase-contents ((struc list) &aux curr contents)
+  (setf contents nil)
+  (dolist (elt struc) 
+    (setf curr (find-dict-item elt))
+    (setf contents (snoc curr contents))
+  )
+  contents
+)
+
+; find a random dictionary item which matches the given element number
+(defmethod find-dict-item ((elt integer))
+  (with-input-from-string (stream (read-random-entry))
+    (setf type (read stream))
+    (setf str (read stream))
+  )
+  (cond
+    ((equal type elt)
+      str
+    )
+    (t
+      (find-dict-item elt)
+    )
+  )
+)
+
+; read a random dictionary entry
+(defmethod read-random-entry (&aux rline rand num)
+  (setf rand (random 42))
+  (setf num 0)
+  (setf rline nil)
+  (let ((in (open "dict.txt")))
+    (when in
+      (loop for line = (read-line in nil)
+        while line do
+              (if (eq num rand)
+                (setf rline line))
+                (setf num (+ num 1))
+      )
+      (close in)
+    )
+  )
+  rline
+)

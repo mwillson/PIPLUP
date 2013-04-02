@@ -1,6 +1,5 @@
-; poem.l
-;
-; A simple poem modeled in terms of a form which has its own predefined structure.
+;; poem.l
+;; A simple poem modeled in terms of a form which has its own predefined structure.
 
 (defclass poem ()
   ; form can be one of the following - cento, limerick, haiku, chanceops, sonnet
