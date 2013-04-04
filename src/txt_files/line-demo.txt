@@ -1,0 +1,56 @@
+[1]> (load "line.l")
+;; Loading file line.l
+;; Loaded file line.l
+T
+[2]> (display (gen-dec-sentence))
+"POSITIVE
+BENIGN
+HOUSE
+DO
+EAT
+TREE"
+[3]> (display (gen-dec-sentence))
+"GREAT
+BOAT
+PLAY
+COOL
+CLOUD"
+[4]> (display (gen-dec-sentence))
+"BOAT
+TAKE
+POSITIVE
+NICE
+WATER"
+[5]> (display (gen-dec-sentence))
+"BENIGN
+BENIGN
+SCHOOL
+EAT
+HAPPY
+CLASS"
+[6]> (display (gen-dec-sentence))
+"NICE
+BOAT
+PLAY
+HIS
+BENIGN
+COOL
+BIKE"
+[7]> (display (gen-dec-sentence))
+"THE
+CLOUD
+KICK
+HAPPY
+CLOUD"
+[8]> (display (gen-dec-sentence))
+"POSITIVE
+COOL
+WATER
+DO
+EAT
+COOL
+NICE
+SCHOOL"
+[9]> (exit)
+Bye.
+

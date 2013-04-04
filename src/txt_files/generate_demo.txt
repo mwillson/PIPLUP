@@ -1,0 +1,87 @@
+[1]> (load "generate.l")
+;; Loading file generate.l ...
+;;  Loading file poem.l ...
+;;  Loaded file poem.l
+;; Loaded file generate.l
+T
+[2]> (generate-poem 'haiku)
+rhyme scheme: (A B A)
+A Haiku Poem
+
+"The truth is not being sought
+Hard to rhyme poem
+The essence I have not caught"
+
+[3]> (generate-poem 'haiku)
+rhyme scheme: (A A A)
+A Haiku Poem
+
+"This is hardly a poem
+Can't even show 'em
+Do I possibly know 'em"
+
+[4]> (generate-poem 'haiku)
+rhyme scheme: (A B B)
+A Haiku Poem
+
+"Do I possibly know 'em
+This poem's not fine
+This poem is not a quine"
+
+[5]> (generate-poem 'limerick)
+A Limerick Poem
+
+"The essence I have not caught
+The truth is not being sought
+Can't even show 'em
+Can't even show 'em
+The essence I have not caught"
+
+[6]> (generate-poem 'limerick)
+A Limerick Poem
+
+"Do I possibly know 'em
+Do I possibly know 'em
+I'm having a jest
+Well, I need a rest
+This is hardly a poem"
+
+[7]> (generate-poem 'limerick)
+A Limerick Poem
+
+"I'll put a line here if I may
+I could write poems all day
+Here is a short line
+Here is a short line
+I'll put a line here if I may"
+
+[8]> (generate-poem 'chanceops)
+rhyme scheme: (A B C D B)
+A Chance Operations Poem
+
+"This poem's not fine
+This ends with a dot.
+Hard to rhyme poem
+I'll put a line here if I may
+The essence I have not caught"
+
+[9]> (generate-poem 'chanceops)
+rhyme scheme: (A A A A A)
+A Chance Operations Poem
+
+"I'll put a line here if I may
+A line anyway
+A line anyway
+I'll put a line here if I may
+A line anyway"
+
+[10]> (generate-poem 'chanceops)
+rhyme scheme: (A A A B C)
+A Chance Operations Poem
+
+"The truth is not being sought
+The truth is not being sought
+The essence I have not caught
+I'm having a jest
+I could write poems all day"
+
